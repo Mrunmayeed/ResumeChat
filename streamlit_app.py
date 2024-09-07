@@ -81,46 +81,16 @@ class ResumeBot:
 
     def generate_response(self, text):
         response = self.retrieval_chain.invoke({"input":text})
-        return response['answer']
+
+        return response['answer'], response['context']
 
 
     def setup(self):
 
         self.load_pdf()
         self.create_chain()
-        
-        # with st.form('my_form'):
 
-        # text = st.text_area('Ask a question about me', 'Tell me about yourself')
-        # print(text)
-        # submitted = st.button('Ask me')
-
-        # st.metric('','Ask questions here')
-        # if submitted:
-        #     st.info(self.generate_response(text))
-
-        # prmt = st.chat_input("Tell me about yourself")
-        # if prmt:
-        #     st.write(f"User has sent the following prompt: {prmt}")
-
-        # with st.sidebar:
-
-
-        # if 'hist' in st.session_state:
-        #     messages = st.session_state['hist']
-        #     with messages:
-        #         st.write('done')
-
-        # else:
-        #     messages = st.container(height=600)
-        #     if prompt := st.chat_input("Say something"):
-        #         messages.chat_message("user").write(prompt)
-        #         messages.chat_message("human").write(f"Echo: {prompt}")
-            
-        #     st.session_state['hist'] = messages
-        #     st.write('wrote msg')
-
-        col3,col4 = col1.columns([2,3])
+        col3,col4 = col1.columns([5,6])
 
         col3.image("sq_dp.jpg", width=200)
 
@@ -128,66 +98,154 @@ class ResumeBot:
         col4.subheader('M.S. Computer Science')
         # col4.
 
-        col1.markdown(""" 
-                      ##### Research Assistant @ SJSU (2023 - present)
-                        - Time Series Forecasting on groundwater logs with LSTM, Transformer
-                        - Real Time Machine Learning pipeline with Airflow
+        tab1, tab2, tab3 = col1.tabs(['Experience','Skills','Projects'])
 
-                      ##### Data Engineer Intern @ LendingClub (Summer 2024)
-                        - LLMs for categorization of customer chat data in Snowflake
-                        - customizable app for clustering and chi-square analysis in Streamlit
+        # tab1.markdown(""" 
+        #               ##### Data Engineer @ Fractal AI (2020-2023)
+        #                 - Led the backend team developing ETL pipelines and REST APIs
+        #                 - Warehousing solution with event-driven microservices architecture
+
+        #               ##### Data Engineer Intern @ LendingClub (Summer 2024)
+        #                 - LLMs for categorization of customer chat data in Snowflake
+        #                 - Customizable app for clustering and chi-square analysis in Streamlit
                       
-                      ##### Data Engineer @ Fractal AI (2020-2023)
-                        - Led the backend team developing ETL pipelines and REST APIs
-                        - Warehousing solution with event-driven microservices architecture
-                        - POCs involving Azure Data Factory, Stream Analytics, graphQL
-                      """)
+        #               ##### Research Assistant @ SJSU (2023 - present)
+        #                 - Time Series Forecasting on groundwater logs with LSTM, Transformer
+        #                 - Real Time Machine Learning pipeline with Airflow
+                      
+        #                """)
         
+        de_frac = tab1.button('Data Engineer @ Fractal AI (2020-2023)')
+        if de_frac:
+            tab1.markdown(""" 
+                    - Led the backend team developing ETL pipelines and REST APIs
+                    - Warehousing solution with event-driven microservices architecture""")
+            
+        
+        de_lc = tab1.button('Data Engineer Intern @ LendingClub (Summer 2024)')
+        if de_lc:
+            tab1.markdown(""" 
+                    - LLMs for categorization of customer chat data in Snowflake
+                    - Customizable app for clustering and chi-square analysis in Streamlit""")
+            
+        
+        ra = tab1.button('Research Assistant @ SJSU (2023 - present)')
+        if ra:
+            tab1.markdown(""" 
+                    - Time Series Forecasting on groundwater logs with LSTM, Transformer
+                    - Real Time Machine Learning pipeline with Airflow""")
+
+        
+        # tab2.markdown('### Skills:')
+
+        col5, col6 = tab2.columns([2,2])
+
+        lang = col5.button('Languages')
+        if lang:
+            col6.markdown("""
+            - Python
+            - SQL
+            - Java
+            - JavaScript
+            - Scala
+            """)
+
+
+        webdev = col5.button('Web Development')
+        if webdev:
+            col6.markdown("""
+                        - Streamlit
+                        - Flask
+                        - FastAPI
+                        - Django
+                        - Angular
+                        """)
+            
+        etl = col5.button('ETL & BigData')
+        if etl:
+            col6.markdown("""
+                        - Airflow
+                        - Snowflake
+                        - Spark
+                        - Hadoop
+                        - Hive
+                        - Knime
+                        """)
+            
+        db = col5.button('Database Management')
+        if db:
+            col6.markdown("""
+                        - MSSQL
+                        - MySQL
+                        - Neo4J
+                        - MongoDB
+                        - CosmosDB
+                        - Oracle
+                        """)
+            
+        azure = col5.button('Cloud Platforms')
+        if azure:
+            col6.markdown("""
+                        - Kubernetes
+                        - ServiceBus
+                        - FunctionApp
+                        - WebApps
+                        - LogAnalytics
+                        - Managed Workflows for Apache Airflow
+                        """)
+            
+        ai = col5.button('AI/ML Modules')
+        if ai:
+            col6.markdown("""
+                        - Keras
+                        - Tensorflow
+                        - Pandas
+                        - Pytorch
+                        - networkx
+                        - langchain
+                        - llamaindex
+                        - openai-whisper
+                        """)
+
+        nlp = tab3.button('Sentiment Analysis for Movie Review')
+        if nlp:
+            tab3.markdown("""
+            - Natural Language Processing in Spark
+            - Detected fake reviews on a web scraped dataset
+            """)
+
+        ot = tab3.button('Predictive Modeling for Operational Technology Application')
+        if ot:
+            tab3.markdown("""
+            - Time Series Forecasting on Industrial Control System logs
+            - Hybrid LSTM and GRU models for anomaly detection
+            - Published in  International Journal for Artificial Intelligence, 2021
+            """)
+
+        rag = tab3.button('Book Recommendation Chatbot')
+        if rag:
+            tab3.markdown("""
+            - Chatbot recommendating books by descriptions and genres
+            - RAG chatbot implemented with LangChain and HuggingFace
+            """)
+
+        css = '''
+        <style>
+            .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
+            font-size:1.2rem;
+            }
+        </style>
+        '''
+
+        col1.markdown(css, unsafe_allow_html=True)
+
         # col1.markdown(""" 
-        #               ##### Work Experience:
-        #               - Research Assistant @ SJSU (2023 - present)
-        #               - Data Engineer Intern @ LendingClub (Summer 2024)
-        #               - Data Engineer @ Fractal AI (2020-2023)
+        #               ##### Research Assistant @ SJSU (2023 - present)
+
+        #               ##### Data Engineer Intern @ LendingClub (Summer 2024)
+                      
+        #               ##### Data Engineer @ Fractal AI (2020-2023)
         #               """)
-        
-
-        # col1.markdown('##### Projects:')
-        # col1.markdown(""" 
-        #             - [Sentiment Analysis for Movie Review (Spark)](https://github.com/Mrunmayeed/nlp_in_spark)
-        #             - [Predictive Modeling for Operational Technology Application](https://www.aut.upt.ro/~rprecup/IJAI_90.pdf)
-        #             - [Book Recommendation Chatbot](https://github.com/Mrunmayeed/ChatbotRAG)
-        #               """)
-
-
-        # col1.markdown('### Skills:')
-
-        # col5, col6, col7 = col1.columns([2,2,2])
-        # col5.markdown("""
-        #               ##### WebDev
-        #               - Python
-        #               - SQL
-        #               - Streamlit
-        #               - Flask
-        #               - FastAPI
-        #             """)
-        # col6.markdown("""
-        #               ##### ETL & BigData
-        #               - Airflow
-        #               - Snowflake
-        #               - Spark
-        #               - Hadoop
-        #               - Hive
-        #             """)
-        # col7.markdown("""
-        #               ##### Cloud: Azure
-        #               - Kubernetes
-        #               - ServiceBus
-        #               - FunctionApp
-        #               - WebApps
-        #               - LogAnalytics
-        #             """)
-        
-
 
         messages = col2.container(height=600)
 
@@ -200,8 +258,9 @@ class ResumeBot:
         if prompt := col2.chat_input("Ask a question about me"):
 
             messages.chat_message("user").write(prompt)
-            response = self.generate_response(prompt)
+            response,context = self.generate_response(prompt)
             messages.chat_message("ai").write(response)
+            print(f"Context for {prompt}:{context}")
 
 
             st.session_state.messages.append({"role": "user", "content": prompt})
