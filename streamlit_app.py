@@ -10,10 +10,15 @@ import streamlit as st
 import os
 
 
+## Sqlite fix
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+
 st.set_page_config(layout='wide')
 
 col1,col2 = st.columns([2,3])
-
 
 class ResumeBot:
 #Load the models
