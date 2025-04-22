@@ -23,7 +23,7 @@ st.set_page_config(layout='wide')
 class ResumeBot:
 #Load the models
     def __init__(self):
-        self.llm = ChatGoogleGenerativeAI(model="gemini-pro")
+        self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro-001")
         self.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
     def load_pdf(self):
